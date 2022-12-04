@@ -1,5 +1,7 @@
 package com.example.plugins
 
+import com.example.routes.html.css
+import com.example.routes.html.homePage
 import com.example.routes.productsRoutes
 import io.ktor.server.routing.*
 import io.ktor.http.*
@@ -17,6 +19,8 @@ fun Application.configureRouting() {
 
     routing {
         productsRoutes()
+        css()
+        homePage()
         // Static plugin. Try to access `/static/index.html`
         static("/static") {
             resources("static")
