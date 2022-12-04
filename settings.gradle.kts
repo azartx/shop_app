@@ -1,0 +1,1 @@
+rootProject.name = "com.solo4.shop"
