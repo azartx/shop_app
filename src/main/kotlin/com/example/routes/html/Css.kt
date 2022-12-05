@@ -4,7 +4,6 @@ import com.example.plugins.respondCss
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import kotlinx.css.*
-import kotlinx.css.Float
 
 fun Route.css() {
     get("/styles.css") {
@@ -12,6 +11,12 @@ fun Route.css() {
             body {
                 backgroundColor = Color.darkBlue
                 margin(0.px)
+            }
+            rule("table.base") {
+                width = 80.pct
+                backgroundColor = Color.white
+                marginLeft = LinearDimension.auto
+                marginRight = LinearDimension.auto
             }
             rule("div.main-list") {
                 width = 80.pct
@@ -26,15 +31,21 @@ fun Route.css() {
                 backgroundColor = Color.white
             }
             rule(".column") {
-                float = Float.left
+                marginLeft = LinearDimension.auto
+                marginRight = LinearDimension.auto
                 width = 33.3.pct
+                textAlign = TextAlign.center
             }
-            rule(".row") {
-                after {
-                    content = QuotedString("")
-                    display = Display.table
-                    clear = Clear.both
-                }
+            button {
+                padding(10.px)
+                marginBottom = 16.px
+            }
+            img {
+                /*width = 80.pct
+                height = 100.pct
+                minWidth = 300.px
+                minHeight = 200.px*/
+                maxHeight = 300.px
             }
         }
     }

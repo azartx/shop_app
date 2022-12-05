@@ -9,7 +9,7 @@ object ProductsTable : Table() {
     val id = integer("id").autoIncrement()
     val name = varchar("name", 128)
     val description = varchar("description", 512)
-    val image = varchar("image", 128)
+    val image = varchar("image", 512)
     val price = varchar("price", 64)
     val priceWithDiscount = varchar("priceWithDiscount", 64)
 
