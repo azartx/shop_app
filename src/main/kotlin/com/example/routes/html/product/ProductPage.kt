@@ -2,7 +2,6 @@ package com.example.routes.html.product
 
 import com.example.database.ProductsTable
 import com.example.js.ext.moveOnClick
-import com.example.model.Product
 import io.ktor.server.application.*
 import io.ktor.server.html.*
 import io.ktor.server.routing.*
@@ -10,17 +9,9 @@ import kotlinx.html.*
 
 fun Route.productPage(cssPath: String) {
     get("/product") {
-        val errorProduct by lazy {
-            Product(
-                id = 0,
-                "Unknown",
-                "Product is not found",
-                "https://tcg-box.com/TCG-BOX/wp-content/themes/barberry/images/placeholder.jpg",
-                "0"
-            )
-        }
         val productId = call.parameters["id"]?.toIntOrNull()
-        val product = if (productId == null) errorProduct else ProductsTable.dao.getProductById(productId) ?: errorProduct
+        val product = if (productId == null) ProductsTable.errorProduct else
+            ProductsTable.dao.getProductById(productId) ?: ProductsTable.errorProduct
 
         call.respondHtml {
             head {
@@ -49,11 +40,13 @@ fun Route.productPage(cssPath: String) {
                             p { text(product.description) }
                         }
                     }
-                    tr(classes = "column") {
-                        td {
-                            button {
-                                moveOnClick("")
-                                text("Add to cart: ${product.price} BYN")
+                    if (product.id >= 0) {
+                        tr(classes = "column") {
+                            td {
+                                button {
+                                    moveOnClick("")
+                                    text("Add to cart: ${product.price} BYN")
+                                }
                             }
                         }
                     }

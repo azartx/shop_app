@@ -15,6 +15,16 @@ object ProductsTable : Table() {
 
     val dao = ProductsDaoImpl()
     override val primaryKey = PrimaryKey(id)
+
+    val errorProduct by lazy {
+        Product(
+            id = -1,
+            "Unknown",
+            "Product is not found",
+            "https://tcg-box.com/TCG-BOX/wp-content/themes/barberry/images/placeholder.jpg",
+            "0"
+        )
+    }
 }
 
 fun toProduct(row: ResultRow) = Product(
