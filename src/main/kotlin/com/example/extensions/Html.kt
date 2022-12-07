@@ -1,9 +1,10 @@
 package com.example.extensions
 
-import kotlinx.html.BODY
-import kotlinx.html.DIV
-import kotlinx.html.div
+import io.ktor.http.*
+import io.ktor.server.application.*
+import io.ktor.server.response.*
+import io.ktor.util.pipeline.*
 
-fun BODY.row(block: DIV.() -> Unit) {
-    div(classes = "row", block)
+suspend fun PipelineContext<Unit, ApplicationCall>.respondBadRequest(message: String = "") {
+    call.respond(HttpStatusCode.BadRequest, message)
 }

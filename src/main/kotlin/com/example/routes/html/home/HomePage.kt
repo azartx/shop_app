@@ -1,17 +1,18 @@
-package com.example.routes.html
+package com.example.routes.html.home
 
 import com.example.database.ProductsTable
+import com.example.js.ext.moveOnClick
 import io.ktor.server.application.*
 import io.ktor.server.html.*
 import io.ktor.server.routing.*
 import kotlinx.html.*
 
-fun Route.homePage() {
+fun Route.homePage(cssPath: String) {
     get("/") {
         val listProducts = ProductsTable.dao.getAllProducts()
         call.respondHtml {
             head {
-                link(rel = "stylesheet", href = "/styles.css", type = "text/css")
+                link(rel = "stylesheet", href = cssPath, type = "text/css")
                 title("Shop online")
             }
             body {
@@ -25,7 +26,7 @@ fun Route.homePage() {
                         tr {
                             rowItems.forEach {product ->
                                 td(classes = "column") {
-                                    a(href = "/product?id=${product.id}") {
+                                    moveOnClick("/product?id=${product.id}")
                                         img {
                                             width = "80%"
                                             height = "auto"
@@ -37,7 +38,6 @@ fun Route.homePage() {
                                         button {
                                             text("Add to cart: ${product.price} BYN")
                                         }
-                                    }
                                 }
                             }
                         }

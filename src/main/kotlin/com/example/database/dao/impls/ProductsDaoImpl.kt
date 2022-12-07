@@ -13,9 +13,9 @@ import org.jetbrains.exposed.sql.selectAll
 class ProductsDaoImpl : ProductsDao {
     override suspend fun getAllProducts() = callDb { ProductsTable.selectAll().map(::toProduct) }
 
-    override suspend fun getProductById(id: Int): Product? {
-        val row = ProductsTable.select(ProductsTable.id.eq(id)).firstOrNull() ?: return null
-        return toProduct(row)
+    override suspend fun getProductById(id: Int): Product? = callDb {
+        val row = ProductsTable.select(ProductsTable.id.eq(id)).firstOrNull() ?: return@callDb null
+        return@callDb toProduct(row)
     }
 
     override suspend fun saveProducts(products: List<Product>) {

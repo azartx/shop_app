@@ -8,12 +8,12 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-fun Route.productsRoutes() {
-    get(path = "/products") {
+fun Route.provideApiRouting() {
+    get(path = "/api/get-products") {
         val products = ProductsTable.dao.getAllProducts()
         call.respond(HttpStatusCode.OK, products)
     }
-    get(path = "/product") {
+    get(path = "/api/get-product") {
         val id = call.parameters["id"]?.toIntOrNull()
         if (id == null) {
             call.respond(HttpStatusCode.BadRequest, "You must provide the correct id as a call query")
@@ -26,7 +26,7 @@ fun Route.productsRoutes() {
         }
         call.respond(HttpStatusCode.OK, product)
     }
-    post(path = "/products") {
+    post(path = "/api/post-products") {
         val products = runCatching { call.receive<List<Product>>() }
         if (products.isFailure)
             call.respond(HttpStatusCode.BadRequest, "Request cannot be converted to Product obj")
@@ -35,7 +35,7 @@ fun Route.productsRoutes() {
             call.respond(HttpStatusCode.OK)
         }
     }
-    post(path = "/product") {
+    post(path = "/api/post-product") {
         val products = runCatching { call.receive<Product>() }
         if (products.isFailure)
             call.respond(HttpStatusCode.BadRequest, "Request cannot be converted to Product obj")

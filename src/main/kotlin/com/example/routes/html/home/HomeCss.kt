@@ -1,12 +1,13 @@
-package com.example.routes.html
+package com.example.routes.html.home
 
 import com.example.plugins.respondCss
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import kotlinx.css.*
 
-fun Route.css() {
-    get("/styles.css") {
+fun Route.homeCss(): String {
+    val path = "/home-styles.css"
+    get(path) {
         call.respondCss {
             body {
                 backgroundColor = Color.darkBlue
@@ -35,6 +36,7 @@ fun Route.css() {
                 marginRight = LinearDimension.auto
                 width = 33.3.pct
                 textAlign = TextAlign.center
+                cursor = Cursor.pointer
             }
             button {
                 padding(10.px)
@@ -49,4 +51,5 @@ fun Route.css() {
             }
         }
     }
+    return path
 }
